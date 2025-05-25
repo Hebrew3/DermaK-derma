@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import react, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { 
   ArrowUp, 
@@ -8,11 +8,8 @@ import {
   Calendar, 
   DollarSign, 
   TrendingUp, 
-  ChevronDown,
-  Layers,
   Package,
   LineChart as LineChartIcon,
-  BarChart2
 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { Select } from '../ui/select';
@@ -32,9 +29,7 @@ import {
   YAxis,
   Cell,
   Area,
-  AreaChart,
   ComposedChart,
-  Scatter,
 } from 'recharts';
 import { formatCurrency } from '../utils/currency';
 
@@ -312,7 +307,7 @@ export const AdminAnalyticsPage = () => {
         <h1 className="text-3xl font-semibold">Analytics Dashboard</h1>
         <div className="flex gap-2 items-center">
           <span className="text-muted-foreground">Timeframe:</span>
-          <Select value={timeframe} onChange={(e) => setTimeframe(e.target.value)}>
+          <Select value={timeframe} onValueChange={(value: string) => setTimeframe(value)}>
             <option value="week">Last Week</option>
             <option value="month">Last Month</option>
             <option value="quarter">Last Quarter</option>
@@ -471,7 +466,7 @@ export const AdminAnalyticsPage = () => {
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
-                  <PieChart>
+                  <PieChart>     
                     <Pie
                       data={servicePopularityData}
                       cx="50%"
@@ -482,9 +477,12 @@ export const AdminAnalyticsPage = () => {
                       fill="#8884d8"
                       dataKey="value"
                     >
-                      {servicePopularityData.map((entry, index) => (
+                      {servicePopularityData.map((entry, index) => {
+                        console.log(entry); // Example usage of entry
+                        return (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
+                      );
+                      })}
                     </Pie>
                     <Tooltip formatter={(value) => `${value}%`} />
                   </PieChart>
@@ -571,7 +569,7 @@ export const AdminAnalyticsPage = () => {
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
-                    <Pie
+                   <Pie
                       data={servicePopularityData}
                       cx="50%"
                       cy="50%"
@@ -581,9 +579,12 @@ export const AdminAnalyticsPage = () => {
                       fill="#8884d8"
                       dataKey="value"
                     >
-                      {servicePopularityData.map((entry, index) => (
+                      {servicePopularityData.map((entry, index) => {
+                        console.log(entry); // Example usage of entry
+                        return (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
+                      );
+                      })}
                     </Pie>
                     <Tooltip formatter={(value) => `${value}%`} />
                   </PieChart>
@@ -696,12 +697,13 @@ export const AdminAnalyticsPage = () => {
                       dataKey="growth" 
                       name="YoY Growth %" 
                       fill="var(--chart-2)"
-                      label={{ position: 'right', formatter: (value) => `${value}%` }}
+                      label={{ position: 'right', formatter: (value: number) => `${value}%` }}
                     >
                       {treatmentGrowthData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.growth < 0 ? "var(--destructive)" : "var(--chart-2)"} />
                       ))}
                     </Bar>
+
                   </BarChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -730,9 +732,12 @@ export const AdminAnalyticsPage = () => {
                       fill="#8884d8"
                       dataKey="revenue"
                     >
-                      {treatmentGrowthData.map((entry, index) => (
+                      {treatmentGrowthData.map((entry, index) => {
+                        console.log(entry); // Example usage of entry
+                      return (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
+                      );
+                      })}
                     </Pie>
                     <Tooltip formatter={(value) => `₱${value}`} />
                   </PieChart>
@@ -907,8 +912,8 @@ export const AdminAnalyticsPage = () => {
                 >
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                   <XAxis dataKey="name" />
-                  <YAxis domain={[0, 1]} tickFormatter={(value) => `${value * 100}%`} />
-                  <Tooltip formatter={(value) => `${(value * 100).toFixed(0)}%`} />
+                  <YAxis domain={[0, 1]} tickFormatter={(value: number) => `${value * 100}%`} />
+                  <Tooltip formatter={(value: number) => `${(value * 100).toFixed(0)}%`} />
                   <Legend />
                   <Bar dataKey="antiAgingSerum" name="Anti-Aging Serum" fill="var(--chart-1)" />
                   <Bar dataKey="hydratingMask" name="Hydrating Mask" fill="var(--chart-2)" />
@@ -1072,11 +1077,14 @@ export const AdminAnalyticsPage = () => {
                       outerRadius={100}
                       fill="#8884d8"
                       dataKey="value"
-                    >
-                      {topStaffData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
+                  >
+                      {topStaffData.map((entry, index) => {
+                        console.log(entry); // Example usage of entry
+                      return (
+                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      );
+                      })}
+                  </Pie>              
                     <Tooltip formatter={(value) => `₱${value}`} />
                   </PieChart>
                 </ResponsiveContainer>
